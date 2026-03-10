@@ -1,0 +1,43 @@
+<!--  rpg_quadrotor_mpc
+      A model predictive control implementation for quadrotors.
+      Copyright (C) 2017-2018 Philipp Foehn, 
+      Robotics and Perception Group, University of Zurich
+   
+      Intended to be used with rpg_quadrotor_control and rpg_quadrotor_common.
+      https://github.com/uzh-rpg/rpg_quadrotor_control
+  
+      This program is free software: you can redistribute it and/or modify
+      it under the terms of the GNU General Public License as published by
+      the Free Software Foundation, either version 3 of the License, or
+      (at your option) any later version.
+  
+      This program is distributed in the hope that it will be useful,
+      but WITHOUT ANY WARRANTY; without even the implied warranty of
+      MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+      GNU General Public License for more details.
+  
+      You should have received a copy of the GNU General Public License
+      along with this program.  If not, see <http://www.gnu.org/licenses/>.
+-->
+
+
+<launch>
+  <arg name="quad_name" default="hummingbird"/>
+  <group ns="$(arg quad_name)" >
+
+  <node pkg="rpg_mpc" type="mpc_controller_node" name="mpc_controller_node" output="screen">
+    <!-- <node pkg="rpg_mpc" type="mpc_controller_node" name="mpc_controller_node" output="screen" launch-prefix="valgrind"> -->
+      <rosparam command="load" file="$(find rpg_mpc)/parameters/default.yaml" />
+      <rosparam file="$(find rpg_mpc)/parameters/hummingbird.yaml" />
+      <!-- <remap from="~odom" to="/vid_estimator/imu_propagate"/> -->
+      <!-- <remap from="~odom" to="/hummingbird/vi_sensor/ground_truth/odometry"/> -->
+      <!-- <remap from="~odom" to="/hummingbird/odometry_sensor1/odometry"/> -->
+      <remap from="~odom" to="/ekf/ekf_odom"/>
+      <remap from="~cmd" to="/position_cmd"/>
+		  <remap from="~traj" to="/hummingbird/command/mpc_trajectory"/>
+      <remap from="~start_trigger" to="/move_base_simple/goal"/>
+      <remap from="~cmd_trigger" to="/hummingbird/goal"/>
+    </node>
+
+  </group>
+</launch>

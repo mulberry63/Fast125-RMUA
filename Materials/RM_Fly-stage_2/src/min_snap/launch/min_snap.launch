@@ -1,0 +1,68 @@
+<launch>
+
+  <include file="$(find min_snap)/launch/rviz.launch" />
+
+  <!-- size of map, change the size inflate x, y, z according to your application -->
+  <arg name="map_size_x" value="10.0"/>
+  <arg name="map_size_y" value="10.0"/>
+  <arg name="map_size_z" value=" 3.0"/>
+  <arg name="init_x_" value="0.0"/>
+  <arg name="init_y_" value="0.0"/>
+  <arg name="init_z_" value="0.0"/>
+
+  <arg name="meanvel" value="8.0"/>
+  <arg name="use_hopf" value="true"/>
+  <arg name="yaw_ctrl" value="false"/>
+  <arg name="radius_" value="1.5"/>
+  <arg name="acro_type" value="4"/>
+  <arg name="fake_planning" value="true"/>
+
+  <!-- General topic -->
+  <arg name="odom_topic" value="/odom" />
+  <arg name="imu_topic" value="/airsim_node/drone_1/imu/imu" />
+  <arg name="pos_cmd_topic" value="/position_cmd" />
+
+  <!-- use simulator -->
+  <!-- <include file="$(find traj_server)/launch/my_sim.xml">
+    <arg name="map_size_x_" value="$(arg map_size_x)"/>
+    <arg name="map_size_y_" value="$(arg map_size_y)"/>
+    <arg name="map_size_z_" value="$(arg map_size_z)"/>
+    <arg name="init_x" value="$(arg init_x_)"/>
+    <arg name="init_y" value="$(arg init_y_)"/>
+    <arg name="init_z" value="$(arg init_z_)"/>
+    <arg name="c_num" value="200"/>
+    <arg name="p_num" value="200"/>
+    <arg name="min_dist" value="1.2"/>
+    <arg name="use_hopf_" value="$(arg use_hopf)"/>
+    <arg name="odometry_topic" value="$(arg odom_topic)" />
+  </include> -->
+
+  <node pkg="min_snap" name="min_snap_generator" type="min_snap_generator" output="screen">
+    <remap from="/rviz_goal" to="/rviz/3d_nav_goal" />
+    <remap from="/goal_list" to="/planning/goal_list" />
+    <remap from="/poly_coefs" to="/planning/poly_coefs" />
+    <remap from="/odom_topic" to="$(arg odom_topic)" />
+    <remap from="/imu_topic" to="$(arg imu_topic)" />
+    <remap from="/position_cmd" to="$(arg pos_cmd_topic)" />
+    <remap from="/out_goal_list" to="/test/goal_list" />
+    <param name="mean_vel" value="$(arg meanvel)" />
+    <param name="fake_planning_flag" value="$(arg fake_planning)" />
+    <rosparam command="load" file="$(find min_snap)/launch/target_list.yaml" />
+  </node>
+
+  <node pkg="my_visualization" name="min_snap_visual" type="min_snap_visual" output="screen">
+    <remap from="/goal_list" to="/planning/goal_list" />
+    <remap from="/position_cmd" to="$(arg pos_cmd_topic)" />
+    <remap from="/traj_pts" to="/planning/traj_pts" />
+    <remap from="/odometry" to="$(arg odom_topic)" />
+  </node>
+
+  <node pkg="traj_server" name="my_traj_server" type="my_traj_server" output="screen">
+    <remap from="/position_cmd" to="$(arg pos_cmd_topic)" />
+    <remap from="/poly_coefs" to="/planning/poly_coefs" />
+    <remap from="/traj_pts" to="/planning/traj_pts" />
+    <param name="yaw_ctrl_" value="$(arg yaw_ctrl)"/>
+    <param name="mean_vel" value="$(arg meanvel)" />
+  </node>
+
+</launch>

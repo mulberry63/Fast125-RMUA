@@ -1,0 +1,12 @@
+<launch>
+  <!-- plan_manage -->
+    <node pkg="plan_manage" type="debug" name="plan_manage" output="screen">
+      <remap from="~trajectory" to="/trajectory" />
+      <param name="debug" value="true"/>
+      <rosparam file="$(find plan_manage)/misc/gate_stage_1.yaml" command="load" />
+      <rosparam file="$(find plan_manage)/config/planner_params.yaml" command="load" />
+  </node>
+    <!-- rviz -->
+  <node name="rviz" pkg="rviz" type="rviz" args="-d $(find plan_manage)/launch/rviz.rviz">
+  </node>
+</launch>
