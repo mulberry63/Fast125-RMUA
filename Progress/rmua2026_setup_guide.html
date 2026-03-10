@@ -1,0 +1,1146 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>RMUA 2026 · 环境配置教程</title>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600;700&family=IBM+Plex+Sans+SC:wght@300;400;500;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #0d1117;
+  --surface: #161b22;
+  --surface2: #21262d;
+  --border: #30363d;
+  --accent: #58a6ff;
+  --green: #3fb950;
+  --yellow: #d29922;
+  --red: #f85149;
+  --purple: #bc8cff;
+  --orange: #e3b341;
+  --text: #c9d1d9;
+  --muted: #8b949e;
+  --code-bg: #1c2128;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'IBM Plex Sans SC', sans-serif;
+  line-height: 1.6;
+}
+
+.layout {
+  display: flex;
+  min-height: 100vh;
+}
+
+/* Sidebar */
+.sidebar {
+  width: 260px;
+  flex-shrink: 0;
+  background: var(--surface);
+  border-right: 1px solid var(--border);
+  padding: 24px 0;
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  overflow-y: auto;
+}
+
+.sidebar-brand {
+  padding: 0 20px 20px;
+  border-bottom: 1px solid var(--border);
+  margin-bottom: 16px;
+}
+
+.sidebar-brand .logo {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--accent);
+  letter-spacing: 1px;
+}
+
+.sidebar-brand .sub {
+  font-size: 11px;
+  color: var(--muted);
+  margin-top: 2px;
+}
+
+.nav-section {
+  padding: 4px 12px;
+  margin-bottom: 4px;
+}
+
+.nav-section-title {
+  font-size: 10px;
+  font-family: 'IBM Plex Mono', monospace;
+  letter-spacing: 2px;
+  color: var(--muted);
+  padding: 6px 8px 4px;
+  text-transform: uppercase;
+}
+
+.nav-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 8px;
+  border-radius: 6px;
+  font-size: 13px;
+  cursor: pointer;
+  color: var(--muted);
+  text-decoration: none;
+  transition: all 0.15s;
+}
+
+.nav-item:hover, .nav-item.active {
+  background: var(--surface2);
+  color: var(--text);
+}
+
+.nav-item .step-num {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 10px;
+  font-family: 'IBM Plex Mono', monospace;
+  flex-shrink: 0;
+}
+
+.nav-item.done .step-num {
+  background: rgba(63,185,80,0.2);
+  border-color: var(--green);
+  color: var(--green);
+}
+
+.nav-item.active .step-num {
+  background: rgba(88,166,255,0.2);
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+/* Main content */
+.main {
+  flex: 1;
+  padding: 40px 48px;
+  max-width: 900px;
+}
+
+/* Header */
+.page-header {
+  margin-bottom: 40px;
+  padding-bottom: 24px;
+  border-bottom: 1px solid var(--border);
+}
+
+.page-header .eyebrow {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 11px;
+  letter-spacing: 3px;
+  color: var(--accent);
+  margin-bottom: 8px;
+}
+
+.page-header h1 {
+  font-size: 32px;
+  font-weight: 700;
+  line-height: 1.2;
+  margin-bottom: 12px;
+}
+
+.page-header p {
+  color: var(--muted);
+  font-size: 14px;
+  max-width: 600px;
+}
+
+/* Prereq badges */
+.prereq-row {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin: 16px 0 32px;
+}
+
+.prereq-badge {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  padding: 4px 12px;
+  border-radius: 20px;
+  border: 1px solid;
+  font-family: 'IBM Plex Mono', monospace;
+}
+
+.prereq-badge.ok { border-color: var(--green); color: var(--green); background: rgba(63,185,80,0.08); }
+.prereq-badge.req { border-color: var(--yellow); color: var(--yellow); background: rgba(210,153,34,0.08); }
+.prereq-badge.opt { border-color: var(--muted); color: var(--muted); background: rgba(139,148,158,0.08); }
+
+/* Step sections */
+.step-section {
+  margin-bottom: 48px;
+  scroll-margin-top: 24px;
+}
+
+.step-header {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 20px;
+}
+
+.step-badge {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 11px;
+  font-weight: 700;
+  padding: 4px 10px;
+  border-radius: 4px;
+  flex-shrink: 0;
+}
+
+.step-badge.step1 { background: rgba(88,166,255,0.15); color: var(--accent); border: 1px solid rgba(88,166,255,0.3); }
+.step-badge.step2 { background: rgba(63,185,80,0.12); color: var(--green); border: 1px solid rgba(63,185,80,0.3); }
+.step-badge.step3 { background: rgba(188,140,255,0.12); color: var(--purple); border: 1px solid rgba(188,140,255,0.3); }
+.step-badge.step4 { background: rgba(227,179,65,0.12); color: var(--orange); border: 1px solid rgba(227,179,65,0.3); }
+.step-badge.step5 { background: rgba(248,81,73,0.1); color: var(--red); border: 1px solid rgba(248,81,73,0.25); }
+.step-badge.step6 { background: rgba(63,185,80,0.12); color: var(--green); border: 1px solid rgba(63,185,80,0.3); }
+
+.step-title {
+  font-size: 20px;
+  font-weight: 700;
+}
+
+.step-desc {
+  font-size: 13px;
+  color: var(--muted);
+  margin-bottom: 20px;
+  line-height: 1.7;
+}
+
+/* Sub steps */
+.substep {
+  margin-bottom: 20px;
+}
+
+.substep-title {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text);
+  margin-bottom: 8px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.substep-title::before {
+  content: '';
+  width: 3px;
+  height: 14px;
+  border-radius: 2px;
+  background: var(--accent);
+  flex-shrink: 0;
+}
+
+/* Code block */
+.code-block {
+  background: var(--code-bg);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  overflow: hidden;
+  margin-bottom: 12px;
+  font-size: 13px;
+}
+
+.code-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 14px;
+  background: var(--surface2);
+  border-bottom: 1px solid var(--border);
+}
+
+.code-label {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 11px;
+  color: var(--muted);
+  letter-spacing: 0.5px;
+}
+
+.copy-btn {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 10px;
+  color: var(--muted);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  padding: 2px 8px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.copy-btn:hover { color: var(--text); border-color: var(--accent); }
+.copy-btn.copied { color: var(--green); border-color: var(--green); }
+
+.code-body {
+  padding: 14px 16px;
+  overflow-x: auto;
+}
+
+.code-body pre {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 12.5px;
+  line-height: 1.7;
+  white-space: pre;
+  color: var(--text);
+}
+
+/* Code syntax highlights */
+.c-comment { color: #6e7681; }
+.c-cmd { color: #79c0ff; }
+.c-str { color: #a5d6ff; }
+.c-flag { color: #ffb86c; }
+.c-var { color: var(--green); }
+.c-warn { color: var(--yellow); }
+
+/* Alert */
+.alert {
+  display: flex;
+  gap: 12px;
+  padding: 14px 16px;
+  border-radius: 6px;
+  margin-bottom: 16px;
+  font-size: 13px;
+  line-height: 1.6;
+}
+
+.alert.info { background: rgba(88,166,255,0.08); border: 1px solid rgba(88,166,255,0.25); }
+.alert.warn { background: rgba(210,153,34,0.08); border: 1px solid rgba(210,153,34,0.25); }
+.alert.danger { background: rgba(248,81,73,0.08); border: 1px solid rgba(248,81,73,0.25); }
+.alert.success { background: rgba(63,185,80,0.08); border: 1px solid rgba(63,185,80,0.25); }
+
+.alert-icon { font-size: 16px; flex-shrink: 0; margin-top: 1px; }
+.alert-text { color: var(--text); }
+.alert-text strong { color: inherit; }
+
+/* ROS topics table */
+.topic-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 12.5px;
+  margin-bottom: 16px;
+}
+
+.topic-table th {
+  background: var(--surface2);
+  padding: 8px 12px;
+  text-align: left;
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 1.5px;
+  color: var(--muted);
+  border: 1px solid var(--border);
+}
+
+.topic-table td {
+  padding: 8px 12px;
+  border: 1px solid var(--border);
+  vertical-align: top;
+}
+
+.topic-table tr:nth-child(even) td { background: rgba(255,255,255,0.02); }
+
+.mono { font-family: 'IBM Plex Mono', monospace; font-size: 11.5px; color: var(--accent); }
+.mono.green { color: var(--green); }
+.mono.purple { color: var(--purple); }
+
+/* Progress tracker */
+.progress-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 20px;
+  margin-bottom: 32px;
+}
+
+.progress-title {
+  font-size: 12px;
+  color: var(--muted);
+  font-family: 'IBM Plex Mono', monospace;
+  letter-spacing: 1px;
+  margin-bottom: 14px;
+}
+
+.progress-steps {
+  display: flex;
+  gap: 4px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.progress-step-item {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 4px 10px;
+  border-radius: 4px;
+  font-size: 11px;
+  font-family: 'IBM Plex Mono', monospace;
+  cursor: pointer;
+  border: 1px solid var(--border);
+  background: var(--surface2);
+  color: var(--muted);
+  transition: all 0.15s;
+  user-select: none;
+}
+
+.progress-step-item:hover { border-color: var(--accent); color: var(--text); }
+.progress-step-item.done { background: rgba(63,185,80,0.1); border-color: rgba(63,185,80,0.4); color: var(--green); }
+
+.overall-bar {
+  margin-top: 12px;
+  height: 4px;
+  background: var(--border);
+  border-radius: 2px;
+  overflow: hidden;
+}
+
+.overall-fill {
+  height: 100%;
+  background: linear-gradient(to right, var(--accent), var(--green));
+  transition: width 0.4s;
+  border-radius: 2px;
+}
+
+/* Divider */
+.divider { height: 1px; background: var(--border); margin: 32px 0; }
+
+/* Inline code */
+code {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 12px;
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  padding: 1px 5px;
+  border-radius: 3px;
+  color: var(--accent);
+}
+
+@media (max-width: 768px) {
+  .sidebar { display: none; }
+  .main { padding: 24px 16px; }
+}
+</style>
+</head>
+<body>
+<div class="layout">
+
+<!-- Sidebar -->
+<aside class="sidebar">
+  <div class="sidebar-brand">
+    <div class="logo">RMUA 2026</div>
+    <div class="sub">环境配置教程 · Ubuntu 20.04</div>
+  </div>
+
+  <div class="nav-section">
+    <div class="nav-section-title">配置步骤</div>
+
+    <a class="nav-item" href="#step1">
+      <span class="step-num">1</span> 检查 NVIDIA 驱动
+    </a>
+    <a class="nav-item" href="#step2">
+      <span class="step-num">2</span> 安装 ROS Noetic
+    </a>
+    <a class="nav-item" href="#step3">
+      <span class="step-num">3</span> 安装 Docker
+    </a>
+    <a class="nav-item" href="#step4">
+      <span class="step-num">4</span> 安装 nvidia-container-toolkit
+    </a>
+    <a class="nav-item" href="#step5">
+      <span class="step-num">5</span> 下载仿真器
+    </a>
+    <a class="nav-item" href="#step6">
+      <span class="step-num">6</span> 克隆 Base 开发环境
+    </a>
+    <a class="nav-item" href="#step7">
+      <span class="step-num">7</span> 启动仿真器 + 验证
+    </a>
+    <a class="nav-item" href="#step8">
+      <span class="step-num">8</span> 了解 ROS 话题
+    </a>
+  </div>
+
+  <div class="nav-section">
+    <div class="nav-section-title">参考链接</div>
+    <a class="nav-item" href="https://github.com/RoboMaster/IntelligentUAVChampionshipSimulator/tree/RMUA2026-01" target="_blank">
+      <span>🔗</span> Simulator Repo
+    </a>
+    <a class="nav-item" href="https://github.com/RoboMaster/IntelligentUAVChampionshipBase/tree/RMUA2026" target="_blank">
+      <span>🔗</span> Base Dev Repo
+    </a>
+  </div>
+</aside>
+
+<!-- Main -->
+<main class="main">
+
+  <div class="page-header">
+    <div class="eyebrow">STEP BY STEP · 从零配置</div>
+    <h1>RMUA 2026 环境配置全攻略</h1>
+    <p>基于官方 <code>RMUA2026-01</code> 分支 &amp; <code>IntelligentUAVChampionshipBase</code>，帮你从 Ubuntu 20.04 裸机一步一步跑通仿真器。</p>
+
+    <div class="prereq-row">
+      <span class="prereq-badge ok">✓ Ubuntu 20.04</span>
+      <span class="prereq-badge req">⚠ NVIDIA 独显（必须）</span>
+      <span class="prereq-badge req">⚠ 驱动版本 ≥ 470</span>
+      <span class="prereq-badge req">⚠ 显存 ≥ 8GB 推荐</span>
+      <span class="prereq-badge opt">○ 内存 ≥ 16GB</span>
+    </div>
+  </div>
+
+  <!-- Progress tracker -->
+  <div class="progress-card">
+    <div class="progress-title">完成进度追踪（点击勾选）</div>
+    <div class="progress-steps" id="progress-steps">
+      <div class="progress-step-item" onclick="toggleStep(this, 0)">1 · NVIDIA驱动</div>
+      <div class="progress-step-item" onclick="toggleStep(this, 1)">2 · ROS Noetic</div>
+      <div class="progress-step-item" onclick="toggleStep(this, 2)">3 · Docker</div>
+      <div class="progress-step-item" onclick="toggleStep(this, 3)">4 · nvidia-container-toolkit</div>
+      <div class="progress-step-item" onclick="toggleStep(this, 4)">5 · 下载仿真器</div>
+      <div class="progress-step-item" onclick="toggleStep(this, 5)">6 · Base开发环境</div>
+      <div class="progress-step-item" onclick="toggleStep(this, 6)">7 · 启动验证</div>
+      <div class="progress-step-item" onclick="toggleStep(this, 7)">8 · ROS话题理解</div>
+    </div>
+    <div class="overall-bar"><div class="overall-fill" id="overall-fill" style="width:0%"></div></div>
+  </div>
+
+  <!-- ─── STEP 1 ─── -->
+  <div class="step-section" id="step1">
+    <div class="step-header">
+      <span class="step-badge step1">STEP 01</span>
+      <span class="step-title">检查 & 安装 NVIDIA 驱动</span>
+    </div>
+    <p class="step-desc">仿真器基于 UE4，<strong>必须有 NVIDIA 独立显卡</strong>。首先确认驱动已正确安装，建议驱动版本 ≥ 470。</p>
+
+    <div class="substep">
+      <div class="substep-title">检查当前驱动状态</div>
+      <div class="code-block">
+        <div class="code-header">
+          <span class="code-label">bash</span>
+          <button class="copy-btn" onclick="copyCode(this)">复制</button>
+        </div>
+        <div class="code-body"><pre><span class="c-comment"># 查看 GPU 和驱动版本</span>
+<span class="c-cmd">nvidia-smi</span>
+
+<span class="c-comment"># 如果命令不存在，说明驱动未安装</span>
+<span class="c-cmd">nvidia-smi --query-gpu=name,driver_version --format=csv</span></pre></div>
+      </div>
+    </div>
+
+    <div class="substep">
+      <div class="substep-title">如果驱动未安装 — 安装推荐驱动</div>
+      <div class="code-block">
+        <div class="code-header">
+          <span class="code-label">bash</span>
+          <button class="copy-btn" onclick="copyCode(this)">复制</button>
+        </div>
+        <div class="code-body"><pre><span class="c-comment"># 方法一：使用 ubuntu-drivers（推荐新手）</span>
+<span class="c-cmd">sudo apt update</span>
+<span class="c-cmd">sudo ubuntu-drivers autoinstall</span>
+
+<span class="c-comment"># 重启后验证</span>
+<span class="c-cmd">sudo reboot</span>
+<span class="c-cmd">nvidia-smi</span>
+
+<span class="c-comment"># 方法二：手动指定版本（如需 525 驱动）</span>
+<span class="c-cmd">sudo apt install -y nvidia-driver-525</span></pre></div>
+      </div>
+    </div>
+
+    <div class="alert warn">
+      <span class="alert-icon">⚠️</span>
+      <span class="alert-text"><strong>虚拟机用户注意：</strong>如果你在 VMware / VirtualBox 里运行 Ubuntu，仿真器<strong>无法正常运行</strong>（UE4 需要直通 GPU）。请确保是物理机或者双系统安装。</span>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- ─── STEP 2 ─── -->
+  <div class="step-section" id="step2">
+    <div class="step-header">
+      <span class="step-badge step2">STEP 02</span>
+      <span class="step-title">安装 ROS Noetic</span>
+    </div>
+    <p class="step-desc">比赛使用 <strong>ROS 1 Noetic</strong>（Ubuntu 20.04 对应版本），这是与仿真器和开发模板通信的核心框架。</p>
+
+    <div class="substep">
+      <div class="substep-title">添加 ROS 源 & 安装</div>
+      <div class="code-block">
+        <div class="code-header">
+          <span class="code-label">bash · 完整安装（推荐）</span>
+          <button class="copy-btn" onclick="copyCode(this)">复制</button>
+        </div>
+        <div class="code-body"><pre><span class="c-comment"># 1. 添加 ROS 软件源</span>
+<span class="c-cmd">sudo sh -c 'echo "deb http://packages.ros.org/ros/ubuntu $(lsb_release -sc) main" \
+  > /etc/apt/sources.list.d/ros-latest.list'</span>
+
+<span class="c-comment"># 2. 添加 GPG 密钥</span>
+<span class="c-cmd">sudo apt install -y curl</span>
+<span class="c-cmd">curl -s https://raw.githubusercontent.com/ros/rosdistro/master/ros.asc | \
+  sudo apt-key add -</span>
+
+<span class="c-comment"># 3. 更新并安装完整版 ROS（包含所有常用工具）</span>
+<span class="c-cmd">sudo apt update</span>
+<span class="c-cmd">sudo apt install -y ros-noetic-desktop-full</span>
+
+<span class="c-comment"># 4. 安装依赖管理工具</span>
+<span class="c-cmd">sudo apt install -y python3-rosdep python3-rosinstall \
+  python3-rosinstall-generator python3-wstool build-essential</span>
+
+<span class="c-comment"># 5. 初始化 rosdep</span>
+<span class="c-cmd">sudo rosdep init</span>
+<span class="c-cmd">rosdep update</span></pre></div>
+      </div>
+    </div>
+
+    <div class="substep">
+      <div class="substep-title">配置环境变量（每次开终端自动生效）</div>
+      <div class="code-block">
+        <div class="code-header">
+          <span class="code-label">bash</span>
+          <button class="copy-btn" onclick="copyCode(this)">复制</button>
+        </div>
+        <div class="code-body"><pre><span class="c-comment"># 写入 .bashrc，永久生效</span>
+<span class="c-cmd">echo "source /opt/ros/noetic/setup.bash" >> ~/.bashrc</span>
+<span class="c-cmd">source ~/.bashrc</span>
+
+<span class="c-comment"># 验证安装</span>
+<span class="c-cmd">rosversion -d</span>
+<span class="c-comment"># 应输出: noetic</span></pre></div>
+      </div>
+    </div>
+
+    <div class="substep">
+      <div class="substep-title">创建 catkin 工作空间</div>
+      <div class="code-block">
+        <div class="code-header">
+          <span class="code-label">bash</span>
+          <button class="copy-btn" onclick="copyCode(this)">复制</button>
+        </div>
+        <div class="code-body"><pre><span class="c-cmd">mkdir -p ~/catkin_ws/src</span>
+<span class="c-cmd">cd ~/catkin_ws</span>
+<span class="c-cmd">catkin_make</span>
+<span class="c-cmd">echo "source ~/catkin_ws/devel/setup.bash" >> ~/.bashrc</span>
+<span class="c-cmd">source ~/.bashrc</span></pre></div>
+      </div>
+    </div>
+
+    <div class="alert info">
+      <span class="alert-icon">💡</span>
+      <span class="alert-text"><strong>小科普：</strong>catkin_ws 就是你的 ROS 项目工作目录，你以后写的所有 ROS 包都放在 <code>~/catkin_ws/src/</code> 里，用 <code>catkin_make</code> 编译。</span>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- ─── STEP 3 ─── -->
+  <div class="step-section" id="step3">
+    <div class="step-header">
+      <span class="step-badge step3">STEP 03</span>
+      <span class="step-title">安装 Docker</span>
+    </div>
+    <p class="step-desc">官方要求最终提交的算法打包成 Docker 镜像。先在主机开发，后期封装镜像提交。</p>
+
+    <div class="substep">
+      <div class="substep-title">安装 Docker Engine</div>
+      <div class="code-block">
+        <div class="code-header">
+          <span class="code-label">bash · 官方源安装</span>
+          <button class="copy-btn" onclick="copyCode(this)">复制</button>
+        </div>
+        <div class="code-body"><pre><span class="c-comment"># 1. 安装前置依赖</span>
+<span class="c-cmd">sudo apt-get install -y ca-certificates gnupg lsb-release</span>
+
+<span class="c-comment"># 2. 添加 Docker 官方 GPG 密钥</span>
+<span class="c-cmd">sudo mkdir -p /etc/apt/keyrings</span>
+<span class="c-cmd">curl -fsSL https://download.docker.com/linux/ubuntu/gpg | \
+  sudo gpg --dearmor -o /etc/apt/keyrings/docker.gpg</span>
+
+<span class="c-comment"># 3. 添加 Docker 软件源</span>
+<span class="c-cmd">echo "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.gpg] \
+  https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable" | \
+  sudo tee /etc/apt/sources.list.d/docker.list > /dev/null</span>
+
+<span class="c-comment"># 4. 安装 Docker</span>
+<span class="c-cmd">sudo apt-get update</span>
+<span class="c-cmd">sudo apt-get install -y docker-ce docker-ce-cli containerd.io docker-compose-plugin</span>
+
+<span class="c-comment"># 5. 把当前用户加入 docker 组（避免每次都要 sudo）</span>
+<span class="c-cmd">sudo usermod -aG docker $USER</span>
+<span class="c-cmd">newgrp docker</span>
+
+<span class="c-comment"># 6. 验证安装</span>
+<span class="c-cmd">docker run hello-world</span></pre></div>
+      </div>
+    </div>
+
+    <div class="alert warn">
+      <span class="alert-icon">⚠️</span>
+      <span class="alert-text">执行 <code>newgrp docker</code> 后需要<strong>重新登录</strong>或重启终端，组权限才能完全生效。</span>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- ─── STEP 4 ─── -->
+  <div class="step-section" id="step4">
+    <div class="step-header">
+      <span class="step-badge step4">STEP 04</span>
+      <span class="step-title">安装 nvidia-container-toolkit</span>
+    </div>
+    <p class="step-desc">让 Docker 容器能访问宿主机的 NVIDIA GPU，这是运行仿真器 Docker 版本的关键依赖。</p>
+
+    <div class="substep">
+      <div class="substep-title">安装 toolkit</div>
+      <div class="code-block">
+        <div class="code-header">
+          <span class="code-label">bash</span>
+          <button class="copy-btn" onclick="copyCode(this)">复制</button>
+        </div>
+        <div class="code-body"><pre><span class="c-comment"># 1. 添加 nvidia-docker 源</span>
+<span class="c-var">distribution</span>=$(. /etc/os-release; echo $ID$VERSION_ID)
+
+<span class="c-cmd">curl -s -L https://nvidia.github.io/nvidia-docker/gpgkey | sudo apt-key add -</span>
+<span class="c-cmd">curl -s -L https://nvidia.github.io/nvidia-docker/$distribution/nvidia-docker.list | \
+  sudo tee /etc/apt/sources.list.d/nvidia-docker.list</span>
+
+<span class="c-comment"># 2. 安装</span>
+<span class="c-cmd">sudo apt-get update && sudo apt-get install -y nvidia-container-toolkit</span>
+
+<span class="c-comment"># 3. 重启 Docker daemon</span>
+<span class="c-cmd">sudo systemctl restart docker</span>
+
+<span class="c-comment"># 4. 验证：在 docker 中调用 nvidia-smi</span>
+<span class="c-cmd">sudo docker run --rm --runtime=nvidia --gpus all ubuntu nvidia-smi</span>
+<span class="c-comment"># 正常输出应显示你的 GPU 信息</span></pre></div>
+      </div>
+    </div>
+
+    <div class="alert success">
+      <span class="alert-icon">✅</span>
+      <span class="alert-text">如果 <code>docker run ... nvidia-smi</code> 正常输出 GPU 信息（显卡名称、驱动版本），说明 GPU 直通 Docker 配置成功。</span>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- ─── STEP 5 ─── -->
+  <div class="step-section" id="step5">
+    <div class="step-header">
+      <span class="step-badge step5">STEP 05</span>
+      <span class="step-title">下载仿真器</span>
+    </div>
+    <p class="step-desc">从官方阿里云 OSS 下载 RMUA 2026 仿真器包，并配置好启动所需的 <code>settings.json</code>。</p>
+
+    <div class="substep">
+      <div class="substep-title">下载并解压仿真器</div>
+      <div class="code-block">
+        <div class="code-header">
+          <span class="code-label">bash</span>
+          <button class="copy-btn" onclick="copyCode(this)">复制</button>
+        </div>
+        <div class="code-body"><pre><span class="c-comment"># 创建目录</span>
+<span class="c-cmd">mkdir -p ~/rmua2026 && cd ~/rmua2026</span>
+
+<span class="c-comment"># 下载仿真器（RMUA 2026 官方包）</span>
+<span class="c-cmd">wget https://sz-rm-rmua-dispatch-prod.oss-cn-shenzhen.aliyuncs.com/0e954d75cf7e0afdba0d2dea27a08295/simulator_12.0.0.3.zip</span>
+
+<span class="c-comment"># 解压</span>
+<span class="c-cmd">unzip simulator_12.0.0.3.zip</span>
+<span class="c-cmd">cd simulator_12.0.0.3</span>
+<span class="c-cmd">ls -la</span></pre></div>
+      </div>
+    </div>
+
+    <div class="substep">
+      <div class="substep-title">克隆 Simulator 仓库（获取 settings.json 和启动脚本）</div>
+      <div class="code-block">
+        <div class="code-header">
+          <span class="code-label">bash</span>
+          <button class="copy-btn" onclick="copyCode(this)">复制</button>
+        </div>
+        <div class="code-body"><pre><span class="c-cmd">cd ~/rmua2026</span>
+<span class="c-cmd">git clone -b RMUA2026-01 \
+  https://github.com/RoboMaster/IntelligentUAVChampionshipSimulator.git</span>
+
+<span class="c-comment"># 将 settings.json 复制到 AirSim 配置目录</span>
+<span class="c-cmd">mkdir -p ~/Documents/AirSim</span>
+<span class="c-cmd">cp IntelligentUAVChampionshipSimulator/settings.json ~/Documents/AirSim/settings.json</span></pre></div>
+      </div>
+    </div>
+
+    <div class="substep">
+      <div class="substep-title">给启动脚本加执行权限</div>
+      <div class="code-block">
+        <div class="code-header">
+          <span class="code-label">bash</span>
+          <button class="copy-btn" onclick="copyCode(this)">复制</button>
+        </div>
+        <div class="code-body"><pre><span class="c-cmd">cd ~/rmua2026/simulator_12.0.0.3</span>
+<span class="c-cmd">chmod +x *.sh</span>
+<span class="c-cmd">ls *.sh</span>
+<span class="c-comment"># 应该能看到：run_simulator.sh  run_simulator_offscreen.sh 等</span></pre></div>
+      </div>
+    </div>
+
+    <div class="alert info">
+      <span class="alert-icon">💡</span>
+      <span class="alert-text"><strong>性能提示：</strong>如果帧率不稳定，可以编辑 <code>~/Documents/AirSim/settings.json</code>，注释掉不需要的相机配置（比如后视相机）来降低 GPU 负担。</span>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- ─── STEP 6 ─── -->
+  <div class="step-section" id="step6">
+    <div class="step-header">
+      <span class="step-badge step6">STEP 06</span>
+      <span class="step-title">克隆 Base 开发环境</span>
+    </div>
+    <p class="step-desc">官方提供了开发模板仓库 <code>IntelligentUAVChampionshipBase</code>，里面包含 ROS 包示例、Docker 模板和接口定义，是你们写代码的起点。</p>
+
+    <div class="substep">
+      <div class="substep-title">克隆仓库</div>
+      <div class="code-block">
+        <div class="code-header">
+          <span class="code-label">bash</span>
+          <button class="copy-btn" onclick="copyCode(this)">复制</button>
+        </div>
+        <div class="code-body"><pre><span class="c-cmd">cd ~/rmua2026</span>
+<span class="c-cmd">git clone -b RMUA2026 \
+  https://github.com/RoboMaster/IntelligentUAVChampionshipBase.git</span>
+
+<span class="c-cmd">ls IntelligentUAVChampionshipBase/</span>
+<span class="c-comment"># 主要目录：
+# basic_dev/          ← 开发模板（包含 airsim_ros 包 + Dockerfile）
+# VelCmdmsg/          ← 速度控制消息定义
+# README.md</span></pre></div>
+      </div>
+    </div>
+
+    <div class="substep">
+      <div class="substep-title">将 airsim_ros 包加入工作空间</div>
+      <div class="code-block">
+        <div class="code-header">
+          <span class="code-label">bash</span>
+          <button class="copy-btn" onclick="copyCode(this)">复制</button>
+        </div>
+        <div class="code-body"><pre><span class="c-comment"># 把 airsim_ros 包链接/复制到 catkin_ws</span>
+<span class="c-cmd">cp -r ~/rmua2026/IntelligentUAVChampionshipBase/basic_dev/airsim_ros \
+  ~/catkin_ws/src/</span>
+
+<span class="c-comment"># 安装依赖</span>
+<span class="c-cmd">cd ~/catkin_ws</span>
+<span class="c-cmd">rosdep install --from-paths src --ignore-src -r -y</span>
+
+<span class="c-comment"># 编译</span>
+<span class="c-cmd">catkin_make</span>
+<span class="c-cmd">source devel/setup.bash</span></pre></div>
+      </div>
+    </div>
+
+    <div class="substep">
+      <div class="substep-title">构建 basic_dev Docker 镜像（可选，用于提交测试）</div>
+      <div class="code-block">
+        <div class="code-header">
+          <span class="code-label">bash</span>
+          <button class="copy-btn" onclick="copyCode(this)">复制</button>
+        </div>
+        <div class="code-body"><pre><span class="c-cmd">cd ~/rmua2026/IntelligentUAVChampionshipBase/basic_dev</span>
+<span class="c-cmd">docker build -t basic_dev .</span>
+<span class="c-comment"># 构建可能需要 10~20 分钟（需要下载 ROS 等依赖）</span></pre></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- ─── STEP 7 ─── -->
+  <div class="step-section" id="step7">
+    <div class="step-header">
+      <span class="step-badge step1">STEP 07</span>
+      <span class="step-title">启动仿真器 & 验证通信</span>
+    </div>
+    <p class="step-desc">现在把所有东西跑起来，验证 ROS 能收到传感器数据。</p>
+
+    <div class="substep">
+      <div class="substep-title">方式 A：本机图形界面模式（推荐新手调试）</div>
+      <div class="code-block">
+        <div class="code-header">
+          <span class="code-label">bash · 终端 1 — 启动仿真器</span>
+          <button class="copy-btn" onclick="copyCode(this)">复制</button>
+        </div>
+        <div class="code-body"><pre><span class="c-cmd">cd ~/rmua2026/simulator_12.0.0.3</span>
+<span class="c-comment"># 用随机种子 123 启动（种子影响障碍物随机布置）</span>
+<span class="c-cmd">./run_simulator.sh 123</span>
+<span class="c-comment"># 等待 UE4 场景加载完毕（可能需要 1~2 分钟）</span></pre></div>
+      </div>
+
+      <div class="code-block">
+        <div class="code-header">
+          <span class="code-label">bash · 终端 2 — 启动 basic_dev Docker</span>
+          <button class="copy-btn" onclick="copyCode(this)">复制</button>
+        </div>
+        <div class="code-body"><pre><span class="c-cmd">cd ~/rmua2026/IntelligentUAVChampionshipBase/basic_dev</span>
+<span class="c-cmd">./run_basic_dev.sh</span>
+<span class="c-comment"># 容器启动后，应该看到 ROS 节点开始接收数据的日志</span></pre></div>
+      </div>
+    </div>
+
+    <div class="substep">
+      <div class="substep-title">方式 B：后台无头模式（服务器/正式提交用）</div>
+      <div class="code-block">
+        <div class="code-header">
+          <span class="code-label">bash</span>
+          <button class="copy-btn" onclick="copyCode(this)">复制</button>
+        </div>
+        <div class="code-body"><pre><span class="c-comment"># 后台模式（无 GUI，正式比赛提交的运行方式）</span>
+<span class="c-cmd">./run_simulator_offscreen.sh 123</span></pre></div>
+      </div>
+    </div>
+
+    <div class="substep">
+      <div class="substep-title">验证：查看 ROS 话题数据</div>
+      <div class="code-block">
+        <div class="code-header">
+          <span class="code-label">bash · 终端 3 — 在容器内或主机执行</span>
+          <button class="copy-btn" onclick="copyCode(this)">复制</button>
+        </div>
+        <div class="code-body"><pre><span class="c-comment"># 查看所有活跃话题</span>
+<span class="c-cmd">rostopic list</span>
+
+<span class="c-comment"># 查看 IMU 数据（高频 100Hz）</span>
+<span class="c-cmd">rostopic echo /airsim_node/drone_1/imu/imu</span>
+
+<span class="c-comment"># 查看无人机当前位姿</span>
+<span class="c-cmd">rostopic echo /airsim_node/drone_1/odom_local_ned</span>
+
+<span class="c-comment"># 查看话题频率</span>
+<span class="c-cmd">rostopic hz /airsim_node/drone_1/front_left_custom/Scene</span></pre></div>
+      </div>
+    </div>
+
+    <div class="alert success">
+      <span class="alert-icon">✅</span>
+      <span class="alert-text">如果 <code>rostopic list</code> 能看到 <code>/airsim_node/drone_1/...</code> 系列话题，并且 <code>rostopic echo</code> 有数据滚动输出，说明环境配置<strong>完全成功</strong>！</span>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- ─── STEP 8 ─── -->
+  <div class="step-section" id="step8">
+    <div class="step-header">
+      <span class="step-badge step2">STEP 08</span>
+      <span class="step-title">了解关键 ROS 话题接口</span>
+    </div>
+    <p class="step-desc">这是你们写控制代码必须知道的话题列表，分为<strong>输入（传感器数据）</strong>和<strong>输出（控制指令）</strong>两类。</p>
+
+    <div class="substep">
+      <div class="substep-title">📥 输入话题（仿真器 → 你的程序）</div>
+      <table class="topic-table">
+        <thead>
+          <tr><th>话题名</th><th>类型</th><th>频率</th><th>说明</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><span class="mono">/airsim_node/drone_1/odom_local_ned</span></td>
+            <td><span class="mono green">Odometry</span></td>
+            <td>10Hz</td>
+            <td>初始化位姿（世界系）</td>
+          </tr>
+          <tr>
+            <td><span class="mono">/airsim_node/local_goal</span></td>
+            <td><span class="mono green">PoseStamped</span></td>
+            <td>10Hz</td>
+            <td>当前路径终点坐标</td>
+          </tr>
+          <tr>
+            <td><span class="mono">/airsim_node/drone_1/imu/imu</span></td>
+            <td><span class="mono green">Imu</span></td>
+            <td>100Hz</td>
+            <td>IMU 加速度/角速度</td>
+          </tr>
+          <tr>
+            <td><span class="mono">/airsim_node/drone_1/gps/gps</span></td>
+            <td><span class="mono green">NavSatFix</span></td>
+            <td>10Hz</td>
+            <td>GPS（工厂内为 0）</td>
+          </tr>
+          <tr>
+            <td><span class="mono">/airsim_node/drone_1/front_left_custom/Scene</span></td>
+            <td><span class="mono green">Image</span></td>
+            <td>20Hz</span></td>
+            <td>前视左目相机图像</td>
+          </tr>
+          <tr>
+            <td><span class="mono">/airsim_node/drone_1/front_right_custom/Scene</span></td>
+            <td><span class="mono green">Image</span></td>
+            <td>20Hz</td>
+            <td>前视右目相机图像</td>
+          </tr>
+          <tr>
+            <td><span class="mono">/airsim_node/drone_1/lidar/LidarCustom</span></td>
+            <td><span class="mono green">PointCloud2</span></td>
+            <td>10Hz</td>
+            <td>MID360 激光雷达点云</td>
+          </tr>
+          <tr>
+            <td><span class="mono">/airsim_node/drone_1/wind_sensor</span></td>
+            <td><span class="mono green">Vector3Stamped</span></td>
+            <td>50Hz</td>
+            <td>风速计（世界系，m/s）</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="substep">
+      <div class="substep-title">📤 输出话题（你的程序 → 仿真器，二选一）</div>
+      <table class="topic-table">
+        <thead>
+          <tr><th>话题名</th><th>字段说明</th><th>最大频率</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><span class="mono purple">/airsim_node/drone_1/vel_cmd_body_frame</span></td>
+            <td>x速度 / y速度 / z速度 / 角速度 / 加速度上限(≤8m/s²) / 急停标志</td>
+            <td>100Hz</td>
+          </tr>
+          <tr>
+            <td><span class="mono purple">/airsim_node/drone_1/rotor_pwm_cmd</span></td>
+            <td>四电机 PWM（0:右前 / 1:左后 / 2:左前 / 3:右后）</td>
+            <td>100Hz</td>
+          </tr>
+          <tr>
+            <td><span class="mono purple">/airsim_node/meter_report</span></td>
+            <td>index（工厂编号）/ value（仪表数值 0~50）</td>
+            <td>—</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="alert info">
+      <span class="alert-icon">💡</span>
+      <span class="alert-text"><strong>新手建议：</strong>先用 <strong>VEL 速度控制</strong>（vel_cmd_body_frame），比 PWM 简单得多。发一个 x=1.0 的速度指令，无人机就会向前飞。两种接口不能混用，以第一次接收到的信号类型为准。</span>
+    </div>
+
+    <div class="substep">
+      <div class="substep-title">Hello World：发一条速度指令让无人机动起来</div>
+      <div class="code-block">
+        <div class="code-header">
+          <span class="code-label">bash · 手动测试（仿真器运行时执行）</span>
+          <button class="copy-btn" onclick="copyCode(this)">复制</button>
+        </div>
+        <div class="code-body"><pre><span class="c-comment"># 先 source 你的工作空间</span>
+<span class="c-cmd">source ~/catkin_ws/devel/setup.bash</span>
+
+<span class="c-comment"># 发布一次速度指令（向前飞 1m/s，持续手动 ctrl+C 停止）</span>
+<span class="c-comment"># 字段顺序: [vx, vy, vz, yaw_rate, acc_max, is_stop]</span>
+<span class="c-cmd">rostopic pub -r 10 /airsim_node/drone_1/vel_cmd_body_frame \
+  rmua_airsim_ros_pkgs/VelCmd \
+  "twist: {linear: {x: 1.0, y: 0.0, z: 0.0}, angular: {z: 0.0}}"</span></pre></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- Next steps -->
+  <div class="step-section">
+    <div class="step-header">
+      <span class="step-badge step3">下一步</span>
+      <span class="step-title">环境OK之后做什么？</span>
+    </div>
+    <p class="step-desc">配置完成后，按以下顺序开始算法开发：</p>
+
+    <div class="code-block">
+      <div class="code-header">
+        <span class="code-label">学习路线</span>
+      </div>
+      <div class="code-body"><pre><span class="c-comment">阶段 1 → 飞行控制基础</span>
+  ├─ 订阅 odom + local_goal，实现飞向目标点的 PID 控制
+  └─ 验证：无人机能自主飞到指定坐标
+
+<span class="c-comment">阶段 2 → SLAM 定位</span>
+  ├─ 接入 FAST-LIO2（LiDAR + IMU 融合）
+  └─ 验证：可获得比 GPS 更精确的实时位姿
+
+<span class="c-comment">阶段 3 → 障碍物避障</span>
+  ├─ 点云过滤 + 碰撞检测
+  └─ 验证：遇到悬浮汽车能自动绕行
+
+<span class="c-comment">阶段 4 → 工厂巡检视觉</span>
+  ├─ 识别红色三灯设备（YOLOv8 / OpenCV HSV）
+  ├─ 仪表盘读数（指针角度 → 数值）
+  └─ 通过 /airsim_node/meter_report 上报
+
+<span class="c-comment">阶段 5 → 系统整合 + Docker 封装</span>
+  └─ 完整流程测试 → 打包 Docker → 首次提交</pre></div>
+    </div>
+  </div>
+
+</main>
+</div>
+
+<script>
+function copyCode(btn) {
+  const pre = btn.closest('.code-block').querySelector('pre');
+  const text = pre.innerText;
+  navigator.clipboard.writeText(text).then(() => {
+    btn.textContent = '已复制!';
+    btn.classList.add('copied');
+    setTimeout(() => {
+      btn.textContent = '复制';
+      btn.classList.remove('copied');
+    }, 2000);
+  });
+}
+
+const stepStates = new Array(8).fill(false);
+
+function toggleStep(el, idx) {
+  stepStates[idx] = !stepStates[idx];
+  el.classList.toggle('done', stepStates[idx]);
+  el.textContent = stepStates[idx] ? '✓ ' + el.textContent.replace('✓ ', '') : el.textContent.replace('✓ ', '');
+  const count = stepStates.filter(Boolean).length;
+  document.getElementById('overall-fill').style.width = (count / 8 * 100) + '%';
+}
+
+// Active nav on scroll
+const sections = document.querySelectorAll('.step-section[id]');
+const navItems = document.querySelectorAll('.nav-item[href^="#"]');
+
+window.addEventListener('scroll', () => {
+  let current = '';
+  sections.forEach(s => {
+    if (window.scrollY >= s.offsetTop - 80) current = s.id;
+  });
+  navItems.forEach(item => {
+    item.classList.toggle('active', item.getAttribute('href') === '#' + current);
+  });
+});
+</script>
+</body>
+</html>
