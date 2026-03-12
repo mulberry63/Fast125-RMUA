@@ -1,0 +1,9 @@
+std_msgs/Header header
+bool have_general_circle
+bool have_rotation_circle
+bool have_alien_circle
+bool have_transition_circle
+circle_detector/general_circle general_circle
+circle_detector/rotation_circle rotation_circle
+circle_detector/alien_circle alien_circle
+circle_detector/transition_circle transition_circle

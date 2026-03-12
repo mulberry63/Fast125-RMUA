@@ -1,0 +1,5 @@
+<launch>
+    <node pkg = "circle_detector" type = "circle_odom" name = "circle_odom" output = "screen"> 
+        <rosparam file="$(find circle_detector)/config/config.yaml" command="load" />
+    </node>
+</launch>

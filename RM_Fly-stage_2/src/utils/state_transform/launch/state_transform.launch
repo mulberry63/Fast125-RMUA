@@ -1,0 +1,10 @@
+<launch>
+
+  <node pkg="state_transform" name="st_node" type="st_node" output="screen">
+        <remap from="~input_odom" to="/airsim_node/drone_1/odom_local_ned"/>
+        <remap from="~output_odom" to="/odom"/>
+        <remap from="~input_cmd" to="/setpoint_raw/attitude"/>
+        <remap from="~output_posecmd" to="/airsim_node/drone_1/pose_cmd_body_frame"/>
+        <remap from="~output_bodyratecmd" to="/airsim_node/drone_1/angle_rate_throttle_frame"/>
+  </node>
+</launch>

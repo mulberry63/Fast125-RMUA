@@ -1,0 +1,24 @@
+<launch>
+  <arg name="system_attitude" value="/setpoint_raw/attitude" />
+  <arg name="transfer_attitude" value="/transfer_attitude" />
+
+  <!-- topic for debug -->
+  <arg name="system_odom" value="/fake_odom" />
+  <arg name="vins_odom" value="/no_use/odom" />
+  <arg name="pos_cmd_topic" value="/position_cmd" />
+
+
+  <node pkg="min_snap" name="throw_fly_node" type="throw_fly_node" output="screen">
+    <remap from="/sub_attitude" to="$(arg transfer_attitude)" />
+    <remap from="/pub_attitude" to="$(arg system_attitude)" />
+    <remap from="/cmd" to="$(arg pos_cmd_topic)" />
+
+    <remap from="/debug_sub_odom" to="$(arg system_odom)" />
+    <remap from="/debug_pub_odom" to="$(arg vins_odom)" />
+  </node>
+
+  <node pkg="rosbag" type="play" name="throw_fly_bag" output="screen" args="--clock $(find min_snap)/misc/2022-08-24-14-55-57.bag ">
+    <remap from="$(arg system_attitude)" to="$(arg transfer_attitude)" />
+  </node>
+
+</launch>
