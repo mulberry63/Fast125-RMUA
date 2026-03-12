@@ -1,0 +1,53 @@
+<launch>
+    <!-- <node pkg="rviz" type="rviz" name="rviz" args="-d /home/ff/wss/rmfly_ws/rmfly_bags/rviz/rmfly_bag_monitor.rviz" required="true"/> -->
+
+    <node pkg="dyn_obs_detect" name="dyn_obs_detect_node" type="dyn_obs_detect_node" output="log">
+        <param name="fx" value="160.0" type="double"/>
+        <param name="fy" value="160.0" type="double"/>
+        <param name="cx" value="160.0" type="double"/>
+        <param name="cy" value="120.0" type="double"/>
+
+        <param name="obs1_waypt1_x" value= "33.05" type="double"/>
+        <param name="obs1_waypt1_y" value= "56.72" type="double"/>
+        <param name="obs1_waypt1_z" value=  "1.50" type="double"/>
+
+        <param name="obs1_waypt2_x" value= "33.05" type="double"/>
+        <param name="obs1_waypt2_y" value= "78.31" type="double"/>
+        <param name="obs1_waypt2_z" value=  "1.50" type="double"/>
+
+        <param name="obs2_waypt1_x" value= "42.05" type="double"/>
+        <param name="obs2_waypt1_y" value= "60.06" type="double"/>
+        <param name="obs2_waypt1_z" value=  "2.30" type="double"/>
+
+        <param name="obs2_waypt2_x" value= "38.58" type="double"/>
+        <param name="obs2_waypt2_y" value= "64.42" type="double"/>
+        <param name="obs2_waypt2_z" value=  "2.30" type="double"/>
+
+        <param name="obs2_waypt3_x" value= "38.58" type="double"/> <!-- The true value is 74.07, so this is a piece of shit !!! -->
+        <param name="obs2_waypt3_y" value= "76.07" type="double"/>
+        <param name="obs2_waypt3_z" value=  "2.30" type="double"/>
+
+        <param name="obs1_vel" value=  "3.65" type="double"/>
+        <param name="obs2_vel" value=  "2.85" type="double"/>
+
+        <!-- <param name="odom_topic" value="/st_node/odom_for_vio"/> -->
+        <param name="odom_topic" value="/odom"/>
+        <param name="odom_queue_size" value="1" type="int"/>
+
+        <param name="loop_topic" value="/detect_loop_for_dyo"/>
+        <param name="depth_topic" value="/airsim_node/drone_1/front_center/DepthPlanar"/>
+        <param name="skip_pix" value="3" type="int"/>
+        <param name="obs_dist_thr" value="0.4" type="double"/>
+        <param name="obs_filter_size" value="6" type="int"/>
+        <param name="local_obs1_obsv_dt_thr_max" value="0.50" type="double"/>
+        <param name="local_obs1_obsv_dt_thr_min" value="0.23" type="double"/>
+        <param name="obs1_obsv_deadzone_thr" value="1.0" type="double"/>
+        <param name="pred_time_step" value="0.4" type="double"/>
+    </node>
+
+    <!-- <arg name="start_time" default="0"/> -->
+    <!-- <arg name="bag_path" default="/home/ff/wss/rmfly_ws/rmfly_bags/stage2_rgbd_moving_obs_fengxiong.bag"/> -->
+    <!-- <arg name="bag_path" default="/home/ff/wss/rmfly_ws/rmfly_bags/2022-09-01-13-27-58.bag"/> -->
+    <!-- <node pkg="rosbag" type="play" name="rosbag" args="$(arg bag_path) -l -d 1.5 -s $(arg start_time)"/> -->
+
+</launch>

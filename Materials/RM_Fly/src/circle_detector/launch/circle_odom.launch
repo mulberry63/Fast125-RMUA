@@ -1,0 +1,99 @@
+<launch>
+    <node pkg = "circle_detector" type = "circle_odom" name = "circle_odom" output = "log"> 
+        <rosparam file="$(find circle_detector)/config/config.yaml" command="load" />
+    </node>
+
+
+    <!-- <node pkg = "circle_detector" type = "circle_odom" name = "circle_odom_0_06" output = "screen"> 
+        <rosparam file="$(find circle_detector)/config/config.yaml" command="load" />
+        <param name = "frame_delay"  value = "-0.06" />
+        <remap from = "/circle_odom" to = "/circle_odom_0_06"/>
+        <remap from = "/debug_" to = "/debug_0_06"/>
+    </node>
+
+    <node pkg = "circle_detector" type = "circle_odom" name = "circle_odom_0_05" output = "screen"> 
+        <rosparam file="$(find circle_detector)/config/config.yaml" command="load" />
+        <param name = "frame_delay"  value = "-0.05" />
+        <remap from = "/circle_odom" to = "/circle_odom_0_05"/>
+        <remap from = "/debug_" to = "/debug_0_05"/>
+    </node>
+
+    <node pkg = "circle_detector" type = "circle_odom" name = "circle_odom_0_04" output = "screen"> 
+        <rosparam file="$(find circle_detector)/config/config.yaml" command="load" />
+        <param name = "frame_delay"  value = "-0.04" />
+        <remap from = "/circle_odom" to = "/circle_odom_0_04"/>
+        <remap from = "/debug_" to = "/debug_0_04"/>
+    </node>
+
+
+    <node pkg = "circle_detector" type = "circle_odom" name = "circle_odom_0_03" output = "screen"> 
+        <rosparam file="$(find circle_detector)/config/config.yaml" command="load" />
+        <param name = "frame_delay"  value = "-0.03" />
+        <remap from = "/circle_odom" to = "/circle_odom_0_03"/>
+        <remap from = "/debug_" to = "/debug_0_03"/>
+    </node>
+
+    <node pkg = "circle_detector" type = "circle_odom" name = "circle_odom_0_02" output = "screen"> 
+        <rosparam file="$(find circle_detector)/config/config.yaml" command="load" />
+        <param name = "frame_delay"  value = "-0.02" />
+        <remap from = "/circle_odom" to = "/circle_odom_0_02"/>
+        <remap from = "/debug_" to = "/debug_0_02"/>
+    </node>
+
+    <node pkg = "circle_detector" type = "circle_odom" name = "circle_odom_0_01" output = "screen"> 
+        <rosparam file="$(find circle_detector)/config/config.yaml" command="load" />
+        <param name = "frame_delay"  value = "-0.01" />
+        <remap from = "/circle_odom" to = "/circle_odom_0_01"/>
+        <remap from = "/debug_" to = "/debug_0_01"/>
+    </node>
+
+    <node pkg = "circle_detector" type = "circle_odom" name = "circle_odom0_00" output = "screen"> 
+        <rosparam file="$(find circle_detector)/config/config.yaml" command="load" />
+        <param name = "frame_delay"  value = "0.00" />
+        <remap from = "/circle_odom" to = "/circle_odom0_00"/>
+        <remap from = "/debug_" to = "/debug0_00"/>
+    </node>
+
+        <node pkg = "circle_detector" type = "circle_odom" name = "circle_odom0_01" output = "screen"> 
+        <rosparam file="$(find circle_detector)/config/config.yaml" command="load" />
+        <param name = "frame_delay"  value = "0.01" />
+        <remap from = "/circle_odom" to = "/circle_odom0_01"/>
+        <remap from = "/debug_" to = "/debug0_01"/>
+    </node>
+
+    <node pkg = "circle_detector" type = "circle_odom" name = "circle_odom0_02" output = "screen"> 
+        <rosparam file="$(find circle_detector)/config/config.yaml" command="load" />
+        <param name = "frame_delay"  value = "0.02" />
+        <remap from = "/circle_odom" to = "/circle_odom0_02"/>
+        <remap from = "/debug_" to = "/debug0_02"/>
+    </node>
+
+    <node pkg = "circle_detector" type = "circle_odom" name = "circle_odom0_03" output = "screen"> 
+        <rosparam file="$(find circle_detector)/config/config.yaml" command="load" />
+        <param name = "frame_delay"  value = "0.03" />
+        <remap from = "/circle_odom" to = "/circle_odom0_03"/>
+        <remap from = "/debug_" to = "/debug0_03"/>
+    </node>
+
+
+    <node pkg = "circle_detector" type = "circle_odom" name = "circle_odom0_04" output = "screen"> 
+        <rosparam file="$(find circle_detector)/config/config.yaml" command="load" />
+        <param name = "frame_delay"  value = "0.04" />
+        <remap from = "/circle_odom" to = "/circle_odom0_04"/>
+        <remap from = "/debug_" to = "/debug0_04"/>
+    </node>
+
+    <node pkg = "circle_detector" type = "circle_odom" name = "circle_odom0_05" output = "screen"> 
+        <rosparam file="$(find circle_detector)/config/config.yaml" command="load" />
+        <param name = "frame_delay"  value = "0.05" />
+        <remap from = "/circle_odom" to = "/circle_odom0_05"/>
+        <remap from = "/debug_" to = "/debug0_05"/>
+    </node>
+
+    <node pkg = "circle_detector" type = "circle_odom" name = "circle_odom0_06" output = "screen"> 
+        <rosparam file="$(find circle_detector)/config/config.yaml" command="load" />
+        <param name = "frame_delay"  value = "0.06" />
+        <remap from = "/circle_odom" to = "/circle_odom0_06"/>
+        <remap from = "/debug_" to = "/debug0_06"/>
+    </node> -->
+</launch>
