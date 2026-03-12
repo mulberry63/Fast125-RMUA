@@ -1,0 +1,5 @@
+<launch>
+  <!-- rviz -->
+  <node name="rviz" pkg="rviz" type="rviz" args="-d $(find plan_manage)/launch/rviz.rviz">
+  </node>
+</launch>

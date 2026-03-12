@@ -1,0 +1,69 @@
+<launch>
+  <arg name="uavname" default="fpv" />
+  <!-- Ctrl -->
+  <!-- <node pkg="Ctrl" type="Ctrl_node" name="Ctrl" output="log">
+  	<remap from="~odom" to="/odom" />
+  	<remap from="~cmd" to="/position_cmd" />
+  	<remap from="~imu" to="/airsim_node/drone_1/imu/imu" />
+      <rosparam command="load" file="$(find Ctrl)/config/ctrl_param_$(arg uavname).yaml" />
+  </node> -->
+  <!-- visualization -->
+  <node pkg="odom_visualization" name="odom_visualization" type="odom_visualization" output="log">
+        <remap from="~odom" to="/odom"/>
+        <param name="color/a" value="1.0"/>
+        <param name="color/r" value="1.0"/>
+        <param name="color/g" value="0.0"/>
+        <param name="color/b" value="0.0"/>
+        <param name="covariance_scale" value="100.0"/>
+        <param name="robot_scale" value="2.0"/>
+  </node>
+  <node pkg="odom_visualization" name="odom_visualization_2" type="odom_visualization" output="log">
+        <remap from="~odom" to="/st_node/output_odom"/>
+        <param name="color/a" value="1.0"/>
+        <param name="color/r" value="1.0"/>
+        <param name="color/g" value="0.0"/>
+        <param name="color/b" value="0.0"/>
+        <param name="covariance_scale" value="100.0"/>
+        <param name="robot_scale" value="2.0"/>
+  </node>
+  <!-- state_transform -->
+  <!-- <node pkg="state_transform" name="st_node" type="st_node" output="screen">
+        <remap from="~input_odom" to="/airsim_node/drone_1/odom_local_ned"/>
+        <remap from="~output_odom" to="/odom"/>
+        <remap from="~input_cmd" to="/setpoint_raw/attitude"/>
+        <remap from="~output_posecmd" to="/airsim_node/drone_1/pose_cmd_body_frame"/>
+        <remap from="~output_bodyratecmd" to="/airsim_node/drone_1/angle_rate_throttle_frame"/>
+  </node> -->
+  <!-- circle_detector -->
+  <!-- <node pkg = "circle_detector" type = "circle_odom" name = "circle_odom" output = "log">
+      <remap from="~odom" to="/odom"/>
+      <remap from="~circle_odom" to="/circle_odom"/>
+      <remap from="/airsim_node/drone_1/front_center/DepthPerspective" to="/airsim_node/drone_1/front_center/DepthPlanar"/>
+      <param name="odom_vec_length" value="20"/>
+      <param name="odom_chosen_pos" value="-8"/>
+  </node> -->
+  <!-- plan_manage -->
+    <node pkg="plan_manage" type="plan_manage" name="plan_manage" output="screen">
+      <remap from="~PointCloud_in" to="/airsim_global_map"/>
+      <remap from="~odom" to="/odom"/>
+      <remap from="~trajectory" to="/trajectory" />
+      <remap from="~desired_yaw" to="/desired_yaw"/>
+      <remap from="~circle_odom" to="/circle_odom"/>
+      <remap from="~pg_T_vio" to="/detect_loop"/>
+      <rosparam file="$(find plan_manage)/config/gate.yaml" command="load" />
+      <rosparam file="$(find plan_manage)/config/planner_params.yaml" command="load" />
+  </node>
+  <!-- traj_server -->
+  <node pkg="traj_server" type="traj_server_node" name="traj_server" output="log">      
+      <remap from="~/desired_yaw" to="/desired_yaw"/>
+      <remap from="~/position_command" to="/position_cmd"/>
+      <remap from="~/traj_command" to="/traj_cmd"/>
+      <remap from="~/odometry"      to="/odom"/>
+      <remap from="~/trajectory" to="/trajectory"/>
+      <param name="mpc_step" value="20"/>   
+      <param name="mpc_sample_dt" value="0.05"/>    
+  </node>
+    <!-- rviz -->
+  <node name="rviz" pkg="rviz" type="rviz" args="-d $(find plan_manage)/launch/rviz.rviz">
+  </node>
+</launch>

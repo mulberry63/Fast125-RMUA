@@ -1,0 +1,7 @@
+gate_names: ["RandomCirccle_BP2_5",
+             "RandomCirccle_BP3_8",
+             "RandomCirccle_BP5_12",
+             "RandomCirccle_BP6_15",
+             "RandomCirccle_BP7_18",
+             "RandomCirccle_BP8_21",
+             "RandomCirccle_BP9",]
